@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Jumbo Proxy Extension's Popup</title>
+    <style>
+      body {
+        min-width: 400px;
+        overflow-x: hidden;
+      }
+
+      img {
+        margin: 5px;
+        border: 2px solid black;
+        vertical-align: middle;
+        width: 75px;
+        height: 75px;
+      }
+
+<!-- http://css-tricks.com/examples/CSSTabs/#box-thirteen -->
+
+        .tabs { list-style: none; }
+        .tabs li { display: inline; }
+        .tabs li a { color: black; float: left; display: block; padding: 4px 10px; margin-left: -1px; position: relative; left: 1px; background: white; text-decoration: none; }
+        .tabs li a:hover { background: #ccc; }       
+        .tabbed-area { margin: 0 0 50px 0; }
+        .box-wrap { position: relative; min-height: 250px; }
+        .tabbed-area div div { background: white; padding: 20px; min-height: 250px; position: absolute; top: -1px; left: 0; width: 90%; }
+        .tabbed-area div div, .tabs li a { border: 1px solid #ccc; }
+        .adjacent { position: relative; margin-top: 50px; min-height: 300px; }
+        .adjacent div { border: 1px solid #ccc; background: white; padding: 20px; min-height: 250px; position: absolute; top: -1px; left: 0; width: 90%; }
+        .adjacent .tabs { position: absolute; bottom: 100%; left: 0; z-index: 2; }
+        .adjacent .tabs li a { background: -moz-linear-gradient(top, white, #eee); }
+        #box-account:target,
+        #box-options:target,
+        #box-support:target,
+        #box-proxy:target { z-index: 1; }
+        #box-proxy:target ~ .tabs a[href='#box-proxy'],
+        #box-options:target ~ .tabs a[href='#box-options'],
+        #box-support:target ~ .tabs a[href='#box-support'],
+        #box-account:target ~ .tabs a[href='#box-account'] { background: white; border-bottom: 1px solid white; }
+        
+    </style>
+    <!--
+      - JavaScript and HTML must be in separate files: see our Content Security
+      - Policy documentation[1] for details and explanation.
+      -
+      - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
+     -->
+
+  </head>
+  <body>
+  <h3>Jumbo Proxy Switcher</h3>
+
+            <div class="tabbed-area adjacent">
+
+                <div id="box-options">
+    <form id="optionsForm">
+      <fieldset id="options">     
+	<legend>Options</legend>
+	<input type="checkbox" name="proxyRotation" id="proxyRotation"/>Auto rotation - Allows rotating proxies periodically<br/>
+	<input type="checkbox" name="pingTest" id="pingTest"/>Ping test - Measures response time of the server<br/>
+<hr/>
+	<input type="checkbox" name="adsBlocking" id="adsBlocking" disabled/>Ads blocking - Prevents ads from appearing on the pages<br/>
+	<input type="checkbox" name="accountSync" id="accountSync" disabled/>Account Sync - You can use the same account on many computers</br>
+      </fieldset>
+      <input type="submit" value="Save options">
+    </form>
+
+                </div>
+                
+                <div id="box-support">
+
+      <fieldset id="support">     
+	<legend>Support</legend>
+Website: <a href="http://www.jumbroxy.com" title="Jumbo Proxy">www.jumbroxy.com</a><br/>
+Email: <a href="mailto@support@jumbroxy.com" title="Send email">support@jumbroxy.com</a><br/>
+<hr/>
+<form id="supportForm">
+            <input type="hidden" id="supportToken" value="" />
+            <input type="text" required id="supportEmail" />
+            <label for="supportEmail">Enter email address</label>
+            <textarea cols=35 rows=2 required id="supportDescription"></textarea>
+            <label for="supportDescription">Please describe your problem above</label>
+      <input type="submit" value="Send request">
+</form>
+
+      </fieldset>
+
+                </div>
+                
+                <div id="box-account">
+
+      <fieldset id="account">     
+	<legend>Account</legend>
+		<ul>
+		<li><b>Account balance</b> - Current account balance</li>
+		<li><b>Payment history</b> - Shows previous payments</li>
+		<li><b>Bandwidth graphs</b> - Shows data transferred</li>
+		</ul>
+      </fieldset>
+
+                </div>
+                                
+                <div id="box-proxy">
+<div>
+    <form id="proxyForm">
+      <fieldset id="fixed_servers">
+        <legend>Manual Proxy</legend>
+        <input type="radio" name="proxyType" id="proxyTypeManual" value="manual">
+        <label for="proxyTypeManual">Configure your proxy settings <em>manually</em>.</label>
+	<span style="float:left;"><img src="refresh.png" style="width:16px; height:16px; border:0;" id="reloadProxylist" title="Reload proxy list" alt="Reload proxy list"></span>
+        <select id="manualProxies" name="manualProxies">
+	</select>
+      </fieldset>
+      <fieldset id="system">
+        <legend>System Settings</legend>
+        <input type="radio" name="proxyType" id="proxyTypeSystem" value="system">
+        <label for="proxyTypeSystem">Use the <em>system's proxy settings</em>.</label>
+      </fieldset>
+      <fieldset id="direct">
+        <legend>Direct Connection</legend>
+        <input type="radio" name="proxyType" id="proxyTypeDirect" value="direct">
+        <label for="proxyTypeDirect">Your computer is <em>directly connected</em> to the internet; no need for a proxy.</label>
+      </fieldset>
+      <input type="submit" value="Save proxy settings">
+    </form>
+</div>
+                </div>
+                                
+                <ul class="tabs group">
+                    <li><a href="#box-proxy">Proxy</a></li>
+                    <li><a href="#box-options">Options</a></li>
+                    <li><a href="#box-support">Support</a></li>
+                    <li><a href="#box-account">Account</a></li>
+                </ul>
+                        
+            </div>
+
+<!-- We need to place it at the bottom, so the form is rendered already -->
+    <script src="jumbo_customer_account.js"></script>
+    <script src="proxy_form_controller.js"></script>
+    <script src="popup.js"></script>
+
+  </body>
+</html>
+
